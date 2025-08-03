@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import { nanoid } from 'nanoid';
 
 export default function(yargs) {
 yargs.command(
@@ -11,17 +12,14 @@ yargs.command(
       const content  = fs.readFileSync(filePath, 'utf-8');
       const tasks    = JSON.parse(content);
 
-      let i = 0;
-
       const newTask = {
-        id:   i,
+        id:   nanoid(6),
         text: argv.text,
         done: false
       };
 
       tasks.push(newTask);
       fs.writeFileSync(filePath, JSON.stringify(tasks, null, 2));
-      i++;
 
       console.log(`✅ Task added: "${argv.text}" (id: ${newTask.id})`);
     }
